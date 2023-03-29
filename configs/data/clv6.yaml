@@ -1,0 +1,8 @@
+_target_: src.data.clevr6_datamodule.CLEVR6DataModule
+name: "clv6"
+data_dir: ${paths.data_dir}clevr_with_masks/CLEVR6
+img_size: 128
+crop_size: 0
+batch_size: 64
+num_workers: 4
+pin_memory: False

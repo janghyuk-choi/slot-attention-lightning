@@ -1,0 +1,19 @@
+_target_: src.models.monet_module.LitMONet
+
+name: "monet"
+
+optimizer:
+  _target_: torch.optim.RMSprop
+  _partial_: true
+  lr: 0.0001
+
+scheduler: null
+
+net:
+  _target_: src.models.components.monet.MONet
+  n_slots: 7
+  n_blocks: 6
+  shape: [3, 128, 128]
+  z_dim: 16
+  bg_scl: 0.09
+  fg_scl: 0.11

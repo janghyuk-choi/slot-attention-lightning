@@ -7,7 +7,7 @@ defaults:
   - data: mnist.yaml
   - model: mnist.yaml
   - callbacks: default.yaml
-  - logger: null # set logger here or use command line (e.g. `python train.py logger=tensorboard`)
+  - logger: wandb.yaml # set logger here or use command line (e.g. `python train.py logger=tensorboard`)
   - trainer: default.yaml
   - paths: default.yaml
   - extras: default.yaml
@@ -30,6 +30,12 @@ defaults:
 # task name, determines output directory path
 task_name: "train"
 
+# run name, determines output directory name
+run_name: "${data.name}_${model.name}"
+
+# timestamp of run, to prevent redundant use of ${now}
+timestamp: "${now:%Y-%m-%d}_${now:%H-%M-%S}"
+
 # tags to help you identify your experiments
 # you can overwrite this in experiment configs
 # overwrite from command line with `python train.py tags="[first_tag, second_tag]"`
@@ -42,7 +48,7 @@ train: True
 
 # evaluate on test set, using best model weights achieved during training
 # lightning chooses best weights based on the metric specified in checkpoint callback
-test: True
+test: False
 
 # simply provide checkpoint path to resume training
 ckpt_path: null

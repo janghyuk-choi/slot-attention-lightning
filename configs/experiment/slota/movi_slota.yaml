@@ -1,0 +1,34 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /data: movi.yaml
+  - override /model: slota_ae.yaml
+  - override /callbacks: default.yaml
+  - override /trainer: gpu.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+data:
+  batch_size: 64
+  num_workers: 4
+
+model:
+  net:
+    num_slots: 7
+
+tags:
+- ${data.name}
+- ${model.name}
+
+seed: null
+
+# simply provide checkpoint path to resume training
+ckpt_path: null
+
+trainer:
+  gradient_clip_val: 5.0
+  # deterministic: True
