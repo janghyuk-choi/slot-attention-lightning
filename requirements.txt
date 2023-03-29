@@ -23,6 +23,6 @@ rich            # beautiful text formatting in terminal
 pytest          # tests
 sh            # for running bash commands in some tests (linux/macos only)
 
-h5py==3.7.0
+h5py==3.8.0
 setuptools==59.5.0
 pycocotools==2.0.6
