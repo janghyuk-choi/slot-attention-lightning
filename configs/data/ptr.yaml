@@ -1,6 +1,6 @@
 _target_: src.data.ptr_datamodule.PTRDataModule
 name: "ptr"
-data_dir: ${paths.data_dir}PTR_128
+data_dir: ${paths.data_dir}/PTR
 img_size: 128
 crop_size: 0
 batch_size: 64
