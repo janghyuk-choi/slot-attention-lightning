@@ -24,7 +24,7 @@ class SlotAttention(nn.Module):
         super().__init__()
 
         self.num_slots = num_slots
-        self.iterations = num_iterations
+        self.num_iterations = num_iterations
         self.num_attn_heads = num_attn_heads
         self.slot_dim = slot_dim
         self.hid_dim = hid_dim
@@ -73,7 +73,7 @@ class SlotAttention(nn.Module):
         if not train:
             attns = list()
 
-        for iter_idx in range(self.iterations):
+        for iter_idx in range(self.num_iterations):
             slots_prev = slots
             slots = self.norm_slot(slots)
 
