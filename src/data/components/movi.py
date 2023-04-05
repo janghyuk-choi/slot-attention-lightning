@@ -52,7 +52,7 @@ class MOVi(Dataset):
             masks = read_image(os.path.join(self.mask_dir, image_filename)).long().squeeze(0)
             masks = F.one_hot(masks, self.max_num_masks).permute(2, 0, 1)
             masks = self.transform(masks).unsqueeze(-1)
-            # `masks`: (max_num_masks, H, W, 1)
+            # masks: (max_num_masks, H, W, 1)
 
             sample["masks"] = masks.float()
             sample["num_objects"] = len(metadata["instances"])

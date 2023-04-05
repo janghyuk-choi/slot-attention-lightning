@@ -11,7 +11,7 @@ from torchvision.transforms import transforms
 class CLEVR6(Dataset):
     def __init__(
         self,
-        data_dir: str = "data/clevr_with_masks/CLEVR6",
+        data_dir: str = "data/CLEVR6",
         img_size: int = 128,
         transform: transforms.Compose = None,
         train: bool = True,
@@ -68,7 +68,7 @@ class CLEVR6(Dataset):
                 mask = self.transform(mask)
                 masks.append(mask)
             masks = torch.cat(masks, dim=0).unsqueeze(-1)
-            # `masks`: (num_objects + 1, H, W, 1)
+            # masks: (num_objects + 1, H, W, 1)
 
             num_masks = masks.shape[0]
             if num_masks < self.max_num_masks:
@@ -81,7 +81,7 @@ class CLEVR6(Dataset):
                     ),
                     dim=0,
                 )
-            # `masks``: (max_num_masks, H, W, 1)
+            # masks: (max_num_masks, H, W, 1)
 
             sample["masks"] = masks.float()
             sample["num_objects"] = num_masks - 1

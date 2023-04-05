@@ -59,7 +59,7 @@ class PTR(Dataset):
             masks = torch.cat(
                 [(torch.sum(masks, dim=0, keepdim=True) == 0).long(), masks], dim=0
             ).unsqueeze(-1)
-            # `masks`: (num_objects + 1, H, W, 1)
+            # masks: (num_objects + 1, H, W, 1)
 
             num_masks = masks.shape[0]
             if num_masks < self.max_num_masks:
@@ -72,7 +72,7 @@ class PTR(Dataset):
                     ),
                     dim=0,
                 )
-            # `masks``: (max_num_masks, H, W, 1)
+            # masks: (max_num_masks, H, W, 1)
 
             sample["masks"] = masks.float()
             sample["num_objects"] = num_masks - 1
