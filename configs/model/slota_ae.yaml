@@ -16,7 +16,7 @@ scheduler:
   decay_rate: 0.5
 
 net:
-  _target_: src.models.components.slota_ae.SlotAttentionAutoEncoder
+  _target_: src.models.components.slota.slota_ae.SlotAttentionAutoEncoder
   num_slots: 7
   num_iterations: 3
   num_attn_heads: 1

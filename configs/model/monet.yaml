@@ -10,7 +10,7 @@ optimizer:
 scheduler: null
 
 net:
-  _target_: src.models.components.monet.MONet
+  _target_: src.models.components.monet.monet.MONet
   n_slots: 7
   n_blocks: 6
   shape: [3, 128, 128]
