@@ -4,7 +4,7 @@
 # python train.py experiment=example
 
 defaults:
-  - override /data: clvt.yaml
+  - override /data: clv6.yaml
   - override /model: genesis2.yaml
   - override /callbacks: default.yaml
   - override /trainer: gpu.yaml
@@ -13,15 +13,15 @@ defaults:
 # this allows you to overwrite only specified parameters
 
 data:
-  name: "clvt_crop"
+  name: "clv6_crop"
   crop_size: 192
   batch_size: 32
   num_workers: 4
 
 model:
   net:
-    g_goal: 0.5 # 0.5645 for Sketchy, 0.5 for CLEVTEX, and 0.5655 for others
-    K_steps: 11
+    g_goal: 0.5655 # 0.5645 for Sketchy, 0.5 for CLEVTEX, and 0.5655 for others
+    K_steps: 7
 
 tags:
 - ${data.name}
@@ -31,7 +31,3 @@ seed: null
 
 # simply provide checkpoint path to resume training
 ckpt_path: null
-
-# trainer:
-  # gradient_clip_val: 5.0
-  # deterministic: True

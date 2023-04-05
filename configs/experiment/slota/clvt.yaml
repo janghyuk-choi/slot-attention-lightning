@@ -5,22 +5,20 @@
 
 defaults:
   - override /data: clvt.yaml
-  - override /model: iodine.yaml
+  - override /model: slota_ae.yaml
   - override /callbacks: default.yaml
-  - override /trainer: ddp.yaml
+  - override /trainer: gpu.yaml
 
 # all parameters below will be merged with parameters from default configurations set above
 # this allows you to overwrite only specified parameters
 
 data:
-  name: "clvt_crop"
-  crop_size: 192
-  batch_size: 8 # Total 32, in our case 8 x 4 GPUs
+  batch_size: 64
   num_workers: 4
 
 model:
   net:
-    K: 11
+    num_slots: 11
 
 tags:
 - ${data.name}
@@ -31,7 +29,5 @@ seed: null
 # simply provide checkpoint path to resume training
 ckpt_path: null
 
-trainer: # ddp
-  devices: 4
+trainer:
   gradient_clip_val: 5.0
-  # deterministic: True

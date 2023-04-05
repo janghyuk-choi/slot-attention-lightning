@@ -4,21 +4,21 @@
 # python train.py experiment=example
 
 defaults:
-  - override /data: clv6.yaml
-  - override /model: monet.yaml
+  - override /data: ptr.yaml
+  - override /model: iodine.yaml
   - override /callbacks: default.yaml
-  - override /trainer: gpu.yaml
+  - override /trainer: ddp.yaml
 
 # all parameters below will be merged with parameters from default configurations set above
 # this allows you to overwrite only specified parameters
 
 data:
-  batch_size: 64
+  batch_size: 8 # Total 32, in our case 8 x 4 GPUs
   num_workers: 4
 
 model:
-  net:
-    n_slots: 7
+    net:
+      K: 7
 
 tags:
 - ${data.name}
@@ -29,6 +29,6 @@ seed: null
 # simply provide checkpoint path to resume training
 ckpt_path: null
 
-# trainer:
-  # gradient_clip_val: 5.0
-  # deterministic: True
+trainer: # ddp
+  devices: 4
+  gradient_clip_val: 5.0

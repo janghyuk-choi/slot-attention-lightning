@@ -5,9 +5,9 @@
 
 defaults:
   - override /data: clv6.yaml
-  - override /model: genesis2.yaml
+  - override /model: iodine.yaml
   - override /callbacks: default.yaml
-  - override /trainer: gpu.yaml
+  - override /trainer: ddp.yaml
 
 # all parameters below will be merged with parameters from default configurations set above
 # this allows you to overwrite only specified parameters
@@ -15,13 +15,12 @@ defaults:
 data:
   name: "clv6_crop"
   crop_size: 192
-  batch_size: 32
+  batch_size: 8 # Total 32, in our case 8 x 4 GPUs
   num_workers: 4
 
 model:
   net:
-    g_goal: 0.5655 # 0.5645 for Sketchy, 0.5 for CLEVTEX, and 0.5655 for others
-    K_steps: 7
+    K: 7
 
 tags:
 - ${data.name}
@@ -32,6 +31,6 @@ seed: null
 # simply provide checkpoint path to resume training
 ckpt_path: null
 
-# trainer:
-  # gradient_clip_val: 5.0
-  # deterministic: True
+trainer: # ddp
+  devices: 4
+  gradient_clip_val: 5.0

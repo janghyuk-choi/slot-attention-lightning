@@ -5,7 +5,7 @@
 
 defaults:
   - override /data: clvt.yaml
-  - override /model: monet.yaml
+  - override /model: slota_ae.yaml
   - override /callbacks: default.yaml
   - override /trainer: gpu.yaml
 
@@ -20,7 +20,7 @@ data:
 
 model:
   net:
-    n_slots: 11
+    num_slots: 11
 
 tags:
 - ${data.name}
@@ -31,6 +31,5 @@ seed: null
 # simply provide checkpoint path to resume training
 ckpt_path: null
 
-# trainer:
-  # gradient_clip_val: 5.0
-  # deterministic: True
+trainer:
+  gradient_clip_val: 5.0

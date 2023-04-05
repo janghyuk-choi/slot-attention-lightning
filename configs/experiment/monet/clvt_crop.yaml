@@ -5,7 +5,7 @@
 
 defaults:
   - override /data: clvt.yaml
-  - override /model: genesis2.yaml
+  - override /model: monet.yaml
   - override /callbacks: default.yaml
   - override /trainer: gpu.yaml
 
@@ -13,13 +13,14 @@ defaults:
 # this allows you to overwrite only specified parameters
 
 data:
-  batch_size: 32
+  name: "clvt_crop"
+  crop_size: 192
+  batch_size: 64
   num_workers: 4
 
 model:
   net:
-    g_goal: 0.5 # 0.5645 for Sketchy, 0.5 for CLEVTEX, and 0.5655 for others
-    K_steps: 11
+    n_slots: 11
 
 tags:
 - ${data.name}
@@ -29,7 +30,3 @@ seed: null
 
 # simply provide checkpoint path to resume training
 ckpt_path: null
-
-# trainer:
-  # gradient_clip_val: 5.0
-  # deterministic: True
