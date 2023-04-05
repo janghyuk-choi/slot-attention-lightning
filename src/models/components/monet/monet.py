@@ -24,7 +24,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.distributions.kl import kl_divergence
 
-from src.models.components.monet_base import MONetBase
+from src.models.components.monet.monet_base import MONetBase
 
 
 class ComponentEncoder(nn.Sequential):

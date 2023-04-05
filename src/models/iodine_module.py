@@ -13,7 +13,7 @@ from pytorch_lightning import LightningModule
 from torchmetrics import MaxMetric, MeanMetric
 
 from utils.evaluator import ARIEvaluator, mIoUEvaluator
-from utils.vis_utils import visualize
+from src.utils.vis_utils import visualize
 
 
 class LitIODINE(LightningModule):

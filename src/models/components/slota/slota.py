@@ -66,9 +66,9 @@ class SlotAttention(nn.Module):
 
         inputs = self.norm_input(inputs)
 
-        # `k`, `v`: (B, N_heads, N_in, D_slot // N_heads).
         k = self.to_k(inputs).reshape(B, N_in, N_heads, -1).transpose(1, 2)
         v = self.to_v(inputs).reshape(B, N_in, N_heads, -1).transpose(1, 2)
+        # k, v: (B, N_heads, N_in, D_slot // N_heads).
 
         if not train:
             attns = list()
@@ -78,23 +78,23 @@ class SlotAttention(nn.Module):
             slots = self.norm_slot(slots)
 
             q = self.to_q(slots).reshape(B, K, N_heads, -1).transpose(1, 2)
-            # `q`: (B, N_heads, K, slot_D // N_heads)
+            # q: (B, N_heads, K, slot_D // N_heads)
 
             attn_logits = torch.einsum("bhid, bhjd->bhij", k, q) * self.scale
 
             attn = attn_logits.softmax(dim=-1) + self.eps  # Normalization over slots
-            # `attn`: (B, N_heads, N_in, K)
+            # attn: (B, N_heads, N_in, K)
 
             if not train:
                 attns.append(attn)
 
             attn = attn / torch.sum(attn, dim=-2, keepdim=True)  # Weighted mean
-            # `attn`: (B, N_heads, N_in, K)
+            # attn: (B, N_heads, N_in, K)
 
             updates = torch.einsum("bhij,bhid->bhjd", attn, v)
-            # `updates`: (B, N_heads, K, slot_D // N_heads)
+            # updates: (B, N_heads, K, slot_D // N_heads)
             updates = updates.transpose(1, 2).reshape(B, K, -1)
-            # `updates`: (B, K, slot_D)
+            # updates: (B, K, slot_D)
 
             slots = self.gru(updates.reshape(-1, D_slot), slots_prev.reshape(-1, D_slot))
 
@@ -105,7 +105,7 @@ class SlotAttention(nn.Module):
         outputs["attn"] = attn
         if not train:
             outputs["attns"] = torch.stack(attns, dim=1)
-            # `attns`: (B, T, N_heads, N_in, K)
+            # attns: (B, T, N_heads, N_in, K)
 
         return outputs
 

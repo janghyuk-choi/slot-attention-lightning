@@ -4,8 +4,8 @@ import numpy as np
 import torch
 from torch import nn
 
-from src.models.components.slota import SlotAttention
-from src.models.components.slota_utils import Decoder, Encoder
+from src.models.components.slota.slota import SlotAttention
+from src.models.components.slota.slota_utils import Decoder, Encoder
 
 
 class SlotAttentionAutoEncoder(nn.Module):
@@ -57,32 +57,32 @@ class SlotAttentionAutoEncoder(nn.Module):
         )
 
     def forward(self, image, train=True):
-        # `image`: (batch_size, num_channels, height, width)
+        # image: (batch_size, num_channels, height, width)
         B, C, H, W = image.shape
 
         # Convolutional encoder with position embedding
         x = self.encoder_cnn(image)  # CNN Backbone
-        # `x`: (B, height * width, hid_dim)
+        # x: (B, height * width, hid_dim)
 
         # Slot Attention module.
         slota_outputs = self.slot_attention(x, train=train)
         slots = slota_outputs["slots"]
-        # `slots`: (N, K, slot_dim)
+        # slots: (N, K, slot_dim)
 
         x = self.decoder_cnn(slots)
-        # `x`: (B*K, height, width, num_channels+1)
+        # x: (B*K, height, width, num_channels+1)
 
         # Undo combination of slot and batch dimension; split alpha masks
         recons, masks = x.reshape(B, self.num_slots, H, W, C + 1).split([3, 1], dim=-1)
-        # `recons`: (B, K, height, width, num_channels)
-        # `masks`: (B, K, height, width, 1)
+        # recons: (B, K, height, width, num_channels)
+        # masks: (B, K, height, width, 1)
 
         # Normalize alpha masks over slots.
         masks = nn.Softmax(dim=1)(masks)
 
         recon_combined = torch.sum(recons * masks, dim=1)  # Recombine image
         recon_combined = recon_combined.permute(0, 3, 1, 2)
-        # `recon_combined`: (batch_size, num_channels, height, width)
+        # recon_combined: (batch_size, num_channels, height, width)
 
         outputs = dict()
         outputs["recon_combined"] = recon_combined
@@ -92,7 +92,7 @@ class SlotAttentionAutoEncoder(nn.Module):
         outputs["attn"] = slota_outputs["attn"]
         if not train:
             outputs["attns"] = slota_outputs["attns"]
-            # `attns`: (B, T, N_heads, N_in, K)
+            # attns: (B, T, N_heads, N_in, K)
 
         return outputs
 
