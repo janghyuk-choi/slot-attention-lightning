@@ -13,7 +13,7 @@
 
 ## Description
 
-This repo is the PyTorch implementation of baseline methods for unsupervised *Object-Centric Learning*, including IODINE, MONet, Slot Attention, and Genesis V2.
+This repo is the PyTorch implementation of the baseline methods for unsupervised *Object-Centric Learning*, including IODINE, MONet, Slot Attention, and Genesis V2.
 - IODINE (Apache-2.0 license): \[[paper](http://proceedings.mlr.press/v97/greff19a.html)\] \[[original code](https://github.com/deepmind/deepmind-research/tree/master/iodine)\]
 - MONet: \[[paper](https://arxiv.org/abs/1901.11390)\] 
 - Slot Attention (MIT license): \[[paper](https://arxiv.org/abs/2006.15055)\] \[[code](https://github.com/lucidrains/slot-attention)\] \[[orginal code](https://github.com/google-research/google-research/tree/master/slot_attention)\]
@@ -26,7 +26,9 @@ This repo is the PyTorch implementation of baseline methods for unsupervised *Ob
 
 ## Repository Structure
 
-The directory structure of this repo looks like this:
+<details>
+<summary> The directory structure of this repo looks like this: </summary>
+<div markdown="1">
 
 ```
 ├── .github                   <- Github Actions workflows
@@ -99,6 +101,12 @@ The directory structure of this repo looks like this:
 └── README.md
 ```
 
+> **Note**  
+> Each dataset may have a different way of providing mask annotation and metadata, so you should match the `Dataset` class for each dataset with its configuration.
+
+</div>
+</details>
+
 <br>
 
 ## Installation
@@ -112,7 +120,7 @@ git clone https://github.com/janghyuk-choi/slot-attention-lightning.git
 cd slot-attention-lightning
 
 # [OPTIONAL] create conda environment
-conda create -n slota python=3.9
+conda create -n slota python=3.8
 conda activate slota
 
 # install pytorch according to instructions
