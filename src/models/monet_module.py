@@ -174,6 +174,12 @@ class LitMONet(LightningModule):
             },
             prog_bar=True,
         )
+    
+    def test_step(self, batch: Any, batch_idx: int):
+        self.validation_step(batch, batch_idx)
+
+    def test_epoch_end(self, outputs: List[Any]):
+        self.validation_epoch_end(outputs)
 
     def configure_optimizers(self):
         optimizer = self.hparams.optimizer(params=self.parameters())
