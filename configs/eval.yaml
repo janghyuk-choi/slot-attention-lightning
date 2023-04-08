@@ -4,15 +4,29 @@ defaults:
   - _self_
   - data: mnist.yaml # choose datamodule with `test_dataloader()` for evaluation
   - model: mnist.yaml
-  - logger: null
+  - callbacks: default.yaml
+  - logger: wandb.yaml
   - trainer: default.yaml
   - paths: default.yaml
   - extras: default.yaml
   - hydra: default.yaml
 
+  - experiment: null
+
 task_name: "eval"
 
 tags: ["dev"]
 
+train: False
+
+test: True
+
 # passing checkpoint path is necessary for evaluation
-ckpt_path: ???
+ckpt_path: null
+
+# run name, determines output directory name
+run_name: "${data.name}_${model.name}_eval"
+
+# timestamp of run, to prevent redundant use of ${now}
+timestamp: "${now:%Y-%m-%d}_${now:%H-%M-%S}"
+
