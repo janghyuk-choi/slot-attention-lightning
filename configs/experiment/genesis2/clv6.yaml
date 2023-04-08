@@ -1,0 +1,31 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /data: clv6.yaml
+  - override /model: genesis2.yaml
+  - override /callbacks: default.yaml
+  - override /trainer: gpu.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+data:
+  batch_size: 32
+  num_workers: 4
+
+model:
+  net:
+    g_goal: 0.5655 # 0.5645 for Sketchy, 0.5 for CLEVTEX, and 0.5655 for others
+    K_steps: 7
+
+tags:
+- ${data.name}
+- ${model.name}
+
+seed: null
+
+# simply provide checkpoint path to resume training
+ckpt_path: null

@@ -1,0 +1,34 @@
+_target_: src.models.genesis2_module.LitGenesis2
+
+name: "gen2"
+
+optimizer:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: 0.0001
+
+scheduler: null
+
+net:
+  _target_: src.models.components.genesis2.Genesis2
+  feat_dim: 64
+  kernel: "gaussian"
+  semiconv: True
+  dynamic_K: False
+  klm_loss: False
+  detach_mr_in_klm: True
+
+  g_goal: 0.5655  # 0.5645 for Sketchy, 0.5 for CLEVTEX, and 0.5655 for others
+  g_alpha: 0.99
+  g_lr: 1e-5
+  g_init: 1.0
+  g_min: 1e-10
+  g_speedup: 10
+
+  K_steps: 7
+  img_size: 128
+  autoreg_prior: True
+  pixel_bound: True
+  pixel_std: 0.7
+
+  debug: False

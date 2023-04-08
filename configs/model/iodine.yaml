@@ -1,0 +1,22 @@
+_target_: src.models.iodine_module.LitIODINE
+
+name: "iodine"
+
+optimizer:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: 0.0003
+
+scheduler: null
+
+net:
+  _target_: src.models.components.iodine.IODINE
+  input_shape: [3, 128, 128]
+  z_size: 64 # Others 64, CLEVRTEX 128???
+  K: 7 # CLEVRTEX 11, Others 7
+  inference_iters: 5
+  std: 0.10
+  kl_beta: 1
+  lstm_dim: 256
+  conv_channels: 64 # Others 64, CLEVRTEX 128???
+  refinenet_channels_in: 17

@@ -1,0 +1,30 @@
+_target_: src.models.slota_ae_module.LitSlotAttentionAutoEncoder
+
+name: "slota"
+
+optimizer:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: 0.0004
+
+scheduler:
+  scheduler:
+    _target_: torch.optim.lr_scheduler.LambdaLR
+    _partial_: true
+  warmup_steps: 20
+  decay_steps: 200
+  decay_rate: 0.5
+
+net:
+  _target_: src.models.components.slota.slota_ae.SlotAttentionAutoEncoder
+  num_slots: 7
+  num_iterations: 3
+  num_attn_heads: 1
+  slot_dim: 64
+  hid_dim: 64
+  mlp_hid_dim: 128
+  eps: 1e-8
+  enc_depth: 4
+  dec_init_size: 8
+  dec_depth: 6
+  dec_hid_dim: 64
