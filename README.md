@@ -15,12 +15,12 @@
 
 This repo is the PyTorch implementation of the baseline methods for unsupervised *Object-Centric Learning*, including IODINE, MONet, Slot Attention, and Genesis V2.
 - IODINE (Apache-2.0 license): \[[paper](http://proceedings.mlr.press/v97/greff19a.html)\] \[[original code](https://github.com/deepmind/deepmind-research/tree/master/iodine)\]
-- MONet: \[[paper](https://arxiv.org/abs/1901.11390)\] 
-- Slot Attention (MIT license): \[[paper](https://arxiv.org/abs/2006.15055)\] \[[code](https://github.com/lucidrains/slot-attention)\] \[[orginal code](https://github.com/google-research/google-research/tree/master/slot_attention)\]
+- MONet: \[[paper](https://arxiv.org/abs/1901.11390)\] \[[code](https://github.com/baudm/MONet-pytorch)\]
+- Slot Attention (MIT license): \[[paper](https://arxiv.org/abs/2006.15055)\] \[[code1](https://github.com/lucidrains/slot-attention), [code2](https://github.com/evelinehong/slot-attention-pytorch)\] \[[orginal code](https://github.com/google-research/google-research/tree/master/slot_attention)\]
 - Genesis V2 (GPLv3 license): \[[paper](https://arxiv.org/abs/2104.09958v2)\] \[[code](https://github.com/applied-ai-lab/genesis)\]
 
-> **NOTE**  
-> The implementation of IODINE, MONet, and Genesis V2 is from the [repo](https://github.com/karazijal/clevrtex) for [ClevrTex](https://www.robots.ox.ac.uk/~vgg/data/clevrtex/).  
+> **Note**  
+> - The implementation of IODINE, MONet, and Genesis V2 is from the [repo](https://github.com/karazijal/clevrtex) for [ClevrTex](https://www.robots.ox.ac.uk/~vgg/data/clevrtex/).  
 
 <br>
 
@@ -102,7 +102,7 @@ This repo is the PyTorch implementation of the baseline methods for unsupervised
 ```
 
 > **Note**  
-> Each dataset may have a different way of providing mask annotation and metadata, so you should match the `Dataset` class for each dataset with its configuration.
+> Each dataset may have each different way of providing mask annotation and metadata, so you should match the `Dataset` class for each dataset with its desired configuration.
 
 </div>
 </details>
@@ -150,13 +150,43 @@ conda activate slota
 
 Train model with chosen experiment configuration from [configs/experiment/](configs/experiment/)
 
-```bash
-python src/train.py experiment=experiment_name.yaml
-```
-
-You can override any parameter from command line like this
+### Training 
 
 ```bash
-python src/train.py trainer.max_epochs=20 data.batch_size=64
+# training Slot Attention over CLEVR6 dataset
+python src/train.py \
+experiment=slota/clv6.yaml
+
+# training Genesis V2 over CLEVRTEX dataset
+python src/train.py \
+experiment=genesis2/clvt.yaml
 ```
 
+You can create your own expreiment configs for the purpose.  
+But, for simple modification, you can override any parameter from command line.  
+
+```bash
+# training Slot Attention over CLEVR6 dataset with custom config
+python src/train.py \
+experiment=slota/clv6.yaml \
+data.data_dir=/workspace/dataset/clevr_with_masks/CLEVR6 \
+trainer.check_val_every_n_epoch=10 \
+model.net.num_slots=10 \
+model.net.num_iter=5 \
+model.name="slota_k10_t5" # model.name will be used for logging on wandb
+``` 
+
+<br>
+
+### Evaluation
+
+You can evaluate a trained model with the corresponding checkpoint.  
+The evaluation is also conducted during training with the interval of `trainer.check_val_every_n_epoch`.
+
+```bash
+# evaluating Slot Attention over CLEVR6 dataset.
+# similar to the training phase, you can also customize the config with command line
+python src/eval.py \
+experiment=slota/clv6.yaml \
+ckpt_path=logs/train/runs/clv6_slota/{timestamp}/checkpoints/last.ckpt
+```
