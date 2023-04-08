@@ -120,7 +120,7 @@ class LitIODINE(LightningModule):
                     colored_box=True,
                 )
                 grid = torchvision.utils.make_grid(vis, nrow=1, pad_value=0)
-                wandb_img = wandb.Image(grid, caption=f"Epoch: {self.current_epoch}")
+                wandb_img = wandb.Image(grid, caption=f"Epoch: {self.current_epoch+1}")
                 wandb_img_list.append(wandb_img)
             self.logger.log_image(key="Visualization on Validation Set", images=wandb_img_list)
 
