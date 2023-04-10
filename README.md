@@ -13,14 +13,18 @@
 
 ## Description
 
-This repo is the PyTorch implementation of the baseline methods for unsupervised *Object-Centric Learning*, including IODINE, MONet, Slot Attention, and Genesis V2.
+This repo is the implementation of the baseline methods for unsupervised *Object-Centric Learning*, including IODINE, MONet, Slot Attention, and Genesis V2. The implementation of IODINE, MONet, and Genesis V2 is from [here](https://github.com/karazijal/clevrtex).  
 - IODINE (Apache-2.0 license): \[[paper](http://proceedings.mlr.press/v97/greff19a.html)\] \[[original code](https://github.com/deepmind/deepmind-research/tree/master/iodine)\]
 - MONet: \[[paper](https://arxiv.org/abs/1901.11390)\] \[[code](https://github.com/baudm/MONet-pytorch)\]
 - Slot Attention (MIT license): \[[paper](https://arxiv.org/abs/2006.15055)\] \[[code1](https://github.com/lucidrains/slot-attention), [code2](https://github.com/evelinehong/slot-attention-pytorch)\] \[[orginal code](https://github.com/google-research/google-research/tree/master/slot_attention)\]
 - Genesis V2 (GPLv3 license): \[[paper](https://arxiv.org/abs/2104.09958v2)\] \[[code](https://github.com/applied-ai-lab/genesis)\]
 
-> **Note**  
-> - The implementation of IODINE, MONet, and Genesis V2 is from the [repo](https://github.com/karazijal/clevrtex) for [ClevrTex](https://www.robots.ox.ac.uk/~vgg/data/clevrtex/).  
+<p align="center">
+  <img src="doc/wandb_results.png" />
+</p>
+<p align = "center">
+&#8593&#8593&#8593 Visualization of training results logged by <a href="https://docs.wandb.ai/">WandB</a> &#8593&#8593&#8593
+</p>
 
 <br>
 
