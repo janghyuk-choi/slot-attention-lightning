@@ -12,7 +12,7 @@ model_checkpoint:
   monitor: "val/ari"
   save_last: True
   save_top_k: 3
-  mode: "min"
+  mode: "max"
   auto_insert_metric_name: False
 
 # early_stopping:
